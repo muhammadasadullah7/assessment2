@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Create Resources (VPC and EC2)</h1>
+<h2>dev</h2>
+
+<form action="/action_page.php">
+  <label for="VPC">VPC:</label>
+  <select name="VPC" id="VPC">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <br><br>
+  
+  <label for="EC2">EC2:</label>
+  <select name="EC2" id="EC2">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  
+  <br><br>
+  <label for="SNS">SNS:</label>
+  <select name="SNS" id="SNS">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+
+  <br><br>
+  <button type="button"  onclick="callAPI(document.getElementById('VPC').value,document.getElementById('EC2').value,document.getElementById('SNS').value)">Call</button>
+  
+</form>
+
+<p id="vpc">VPC ordered: </p>
+<p id="ec2">EC2 ordered: </p>
+<p id="sns">SNS ordered: </p>
+<p id="text2">unoccupied</p>
+
+
+<script>
+
+// define the callAPI function that takes a first name and last name as parameters
+
+var callAPI = (VPC,EC2,SNS)=>{
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "text/plain");
+            myHeaders.append("Host", "api.asadcheema.de");
+            //myHeaders.append("Content-Length", "31");
+            //document.getElementById("dec").innerHTML = myHeaders.get('Content-Type');
+
+
+var raw = JSON.stringify({"VPC":VPC,"EC2":EC2,"SNS":SNS});
+//var raw = JSON.stringify({"VPC":"1","EC2":"2","SNS":"3"});
+
+//var raw = JSON.stringify(post);
+
+// create a JSON object with parameters for API call and store in a variable
+
+var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            
+// make API call with parameters and use promises to get response
+
+fetch("https://api.asadcheema.de",requestOptions)
+          .then((response) => response.text())
+          .then((data) => {
+          //console.log(data);
+          document.getElementById("text2").innerHTML = "correct";
+          document.getElementById("text2").innerHTML = data;
+          })
+          .catch((err) => {
+          //console.log(err)
+          document.getElementById("text2").innerHTML = "wrong";
+          });
+
+document.getElementById("vpc").innerHTML = "VPC: " + document.getElementById('VPC').value;
+document.getElementById("ec2").innerHTML = "EC2: " + document.getElementById('EC2').value;
+document.getElementById("sns").innerHTML = "SNS: " + document.getElementById('SNS').value;
+
+}
+</script>
+
+</body>
+</html> 
