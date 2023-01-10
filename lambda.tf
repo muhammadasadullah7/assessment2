@@ -206,6 +206,7 @@ resource "aws_iam_policy" "iam_policy_for_lambda" {
                 "ec2:UnassignPrivateIpAddresses",
                 "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
                 "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
+                "ec2:TerminateInstances",
                 "iam:GetRole",
                 "iam:PassRole",
                 "lambda:GetFunction",
@@ -221,7 +222,9 @@ resource "aws_iam_policy" "iam_policy_for_lambda" {
                 "events:ListTargetsByRule",
                 "events:DisableRule",
                 "lambda:ListFunctions",
-                "lambda:AddPermission"
+                "lambda:AddPermission",
+                "sns:CreateTopic",
+                "sns:DeleteTopic"
             ],
             "Resource": "*"
         }
